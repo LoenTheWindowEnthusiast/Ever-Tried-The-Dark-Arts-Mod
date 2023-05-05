@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " G ",
+    "GBG",
+    " G "
+  ],
+  "key": {
+    "G": {
+      "item": "minecraft:gold_nugget"
+    },
+    "B": {
+      "item": "evertrieddarkarts:fortune_berry"
+    }
+  },
+  "result": {
+    "item": "evertrieddarkarts:kindled_fortune_berry",
+    "count": 1
+  }
+}
