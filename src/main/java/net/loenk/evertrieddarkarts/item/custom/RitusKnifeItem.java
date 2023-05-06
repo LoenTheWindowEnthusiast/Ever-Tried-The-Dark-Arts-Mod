@@ -39,6 +39,13 @@ public class RitusKnifeItem extends SwordItem {
                 attacker.getWorld().playSound(null, target.getBlockPos(), SoundEvents.ENTITY_SLIME_SQUISH, SoundCategory.NEUTRAL, 0.7f, 1.2f);
                 ItemScatterer.spawn(attacker.getWorld(), target.getPos().getX(), target.getPos().getY(), target.getPos().getZ(), drop);
             }
+        } else if (target.isUndead()) {
+            Random rnd = new Random();
+            if (rnd.nextFloat() > 0.95f) {
+                ItemStack drop = new ItemStack(ModItems.UNDEAD_ESSENCE_VIAL, 1);
+                attacker.getWorld().playSound(null, target.getBlockPos(), SoundEvents.ENTITY_SLIME_SQUISH, SoundCategory.NEUTRAL, 0.7f, 1.2f);
+                ItemScatterer.spawn(attacker.getWorld(), target.getPos().getX(), target.getPos().getY(), target.getPos().getZ(), drop);
+            }
         }
         return super.postHit(stack, target, attacker);
     }

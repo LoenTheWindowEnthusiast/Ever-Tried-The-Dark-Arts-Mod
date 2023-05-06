@@ -8,5 +8,5 @@ import net.minecraft.util.Identifier;
 
 public class ModItemGroup {
     public static final ItemGroup ETTDA_GROUP = FabricItemGroupBuilder.build(new Identifier(EverTriedDarkArtsMod.MOD_ID, "ettda_itemgroup"),
-            () -> new ItemStack(ModItems.RIB_BONE));
+            () -> new ItemStack(ModItems.RITUS_KNIFE));
 }

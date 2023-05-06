@@ -28,7 +28,10 @@ public class HexBagBlockEntity extends LootableContainerBlockEntity {
         return 9;
     }
 
-
+    @Override
+    public int getMaxCountPerStack() {
+        return 1;
+    }
 
     public HexBagBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.HexBag, pos, state);
