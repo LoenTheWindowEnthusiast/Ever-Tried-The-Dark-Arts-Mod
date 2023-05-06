@@ -14,6 +14,7 @@ import net.minecraft.util.registry.Registry;
 public class ModItems {
 
     public static final Item RIB_BONE = registerItem("rib_bone", new Item(new FabricItemSettings().group(ModItemGroup.ETTDA_GROUP)));
+    public static final Item NORMAL_BLOOD_VIAL = registerItem("normal_blood_vial", new Item(new FabricItemSettings().group(ModItemGroup.ETTDA_GROUP)));
 
 
     public static final Item RITUS_KNIFE = registerItem("ritus_knife", new RitusKnifeItem(HexToolMaterial.INSTANCE, 3, -2.4f, new FabricItemSettings().group(ModItemGroup.ETTDA_GROUP).rarity(Rarity.UNCOMMON)));
