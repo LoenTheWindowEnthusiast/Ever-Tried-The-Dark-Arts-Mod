@@ -1,9 +1,7 @@
 package net.loenk.evertrieddarkarts.item.custom;
 
 
-import net.loenk.evertrieddarkarts.block.ModBlocks;
 import net.loenk.evertrieddarkarts.item.ModItems;
-import net.minecraft.client.realms.RepeatedNarrator;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.damage.DamageSource;
@@ -12,14 +10,11 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.LiteralText;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.Util;
 import net.minecraft.world.World;
 
 import java.util.Random;
