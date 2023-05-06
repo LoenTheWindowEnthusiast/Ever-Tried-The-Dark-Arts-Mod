@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " # ",
+    "gEg",
+    " / "
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "g": {
+      "item": "minecraft:gold_ingot"
+    },
+    "E": {
+      "item": "minecraft:emerald"
+    },
+    "/": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "evertrieddarkarts:ritus_knife",
+    "count": 1
+  }
+}
