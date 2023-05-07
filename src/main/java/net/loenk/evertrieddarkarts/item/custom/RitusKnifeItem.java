@@ -12,6 +12,8 @@ import net.minecraft.item.SwordItem;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.tag.ItemTags;
+import net.minecraft.text.LiteralText;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.TypedActionResult;
@@ -47,6 +49,20 @@ public class RitusKnifeItem extends SwordItem {
 
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+        if (!hand.equals(Hand.MAIN_HAND)) return super.use(world, user, hand);
+
+        if (!user.getOffHandStack().isEmpty()) {
+            if (user.getOffHandStack().getItem() == ModItems.KINDLED_FORTUNE_BERRY) {
+                user.sendMessage(new LiteralText("KINDLED FORTUNE BERRY DETECTED !"), false);
+                user.damage(DamageSource.MAGIC, 2f);
+                return TypedActionResult.success(user.getMainHandStack(), world.isClient());
+            }
+
+        } else {
+            user.damage(DamageSource.MAGIC, 1f);
+            return TypedActionResult.success(user.getMainHandStack(), world.isClient());
+        }
+
         return super.use(world, user, hand);
     }
 
