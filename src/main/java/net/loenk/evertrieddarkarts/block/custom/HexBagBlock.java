@@ -2,9 +2,7 @@ package net.loenk.evertrieddarkarts.block.custom;
 
 import net.loenk.evertrieddarkarts.block.ModBlocks;
 import net.loenk.evertrieddarkarts.block.entity.HexBagBlockEntity;
-import net.minecraft.block.BlockRenderType;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.BlockWithEntity;
+import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -20,8 +18,12 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
 
+import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -108,8 +110,6 @@ public class HexBagBlock extends BlockWithEntity {
         return ActionResult.CONSUME;
     }
 
-
-
     @Override
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;
@@ -122,6 +122,10 @@ public class HexBagBlock extends BlockWithEntity {
     }
 
 
+    @Override
+    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        return VoxelShapes.combineAndSimplify(Block.createCuboidShape(6, 0, 6, 10, 4, 10), Block.createCuboidShape(7, 3, 7, 9, 4.2, 9), BooleanBiFunction.OR);
+    }
 
     @Override
     public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
