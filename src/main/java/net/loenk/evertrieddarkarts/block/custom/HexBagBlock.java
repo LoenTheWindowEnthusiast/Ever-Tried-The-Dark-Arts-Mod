@@ -23,7 +23,6 @@ import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import org.apache.commons.codec.binary.Hex;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
@@ -37,21 +36,6 @@ public class HexBagBlock extends BlockWithEntity {
     public HexBagBlock(Settings settings) {
         super(settings);
     }
-
-    /*
-    @Override
-    public void onStateReplaced(BlockState state, World world, BlockPos pos, BlockState newState, boolean moved) {
-        if (state.isOf(newState.getBlock())) {
-            return;
-        }
-        BlockEntity blockEntity = world.getBlockEntity(pos);
-        if (blockEntity instanceof HexBagBlockEntity) {
-            ItemScatterer.spawn(world, pos, (Inventory)((HexBagBlockEntity)blockEntity));
-            world.updateComparators(pos, this);
-        }
-        super.onStateReplaced(state, world, pos, newState, moved);
-    }
-*/
 
 
     @Override
