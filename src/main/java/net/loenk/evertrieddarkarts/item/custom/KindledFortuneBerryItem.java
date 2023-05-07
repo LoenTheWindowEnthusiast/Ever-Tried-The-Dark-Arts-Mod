@@ -1,19 +1,25 @@
 package net.loenk.evertrieddarkarts.item.custom;
 
 
+import net.loenk.evertrieddarkarts.block.ModBlocks;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.entity.*;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.ZombieEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.LiteralText;
+import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.Util;
 import net.minecraft.world.World;
 
@@ -46,16 +52,18 @@ public class KindledFortuneBerryItem extends Item{
             return;
         }
 
+        PlayerEntity player = (PlayerEntity) user;
+
         Random rand = new Random();
-        int randNumber = rand.nextInt(6);
+        int randNumber = rand.nextInt(8);
 
         switch (randNumber) {
             case 0:
-                user.sendSystemMessage(new LiteralText("You feel a little lightheaded"), Util.NIL_UUID);
+                player.sendMessage(new LiteralText("You feel a little lightheaded"), false);
                 break;
             case 1:
                 user.addStatusEffect(new StatusEffectInstance(StatusEffects.SPEED, 3000, 3));
-                user.sendSystemMessage(new LiteralText("Your legs are positively quivering"), Util.NIL_UUID);
+                player.sendMessage(new LiteralText("Your legs are positively quivering"), false);
                 break;
             case 2:
                 ZombieEntity zombie = new ZombieEntity(world);
@@ -77,13 +85,22 @@ public class KindledFortuneBerryItem extends Item{
             case 4:
                 TntEntity tnt2 = new TntEntity(EntityType.TNT ,world);
                 tnt2.setPos(user.getBlockX(), user.getBlockY(), user.getBlockZ());
-                tnt2.setFuse(1);
+                tnt2.setFuse(5);
                 world.spawnEntity(tnt2);
                 break;
             case 5:
                 LightningEntity lightning = new LightningEntity(EntityType.LIGHTNING_BOLT, world);
                 lightning.setPos(user.getBlockX(), user.getBlockY(), user.getBlockZ());
                 world.spawnEntity(lightning);
+                break;
+            case 6:
+                ItemStack drop = new ItemStack(Items.DIAMOND, rand.nextInt(1) + 1);
+                ItemScatterer.spawn(world, user.getX(), user.getY(), user.getZ(), drop);
+                break;
+            case 7:
+                int xpAmount = rand.nextInt(250) + 51;
+                player.addExperience(xpAmount);
+                player.sendMessage(new LiteralText("You suddenly feel +" + xpAmount + " more experienced"), false);
 
         }
     }
