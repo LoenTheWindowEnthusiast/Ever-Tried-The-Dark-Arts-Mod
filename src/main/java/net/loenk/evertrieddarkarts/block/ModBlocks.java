@@ -21,6 +21,7 @@ public class ModBlocks {
 
 
     public static final Block HEX_BAG = registerBlock("hex_bag", new HexBagBlock(FabricBlockSettings.of(Material.WOOL).nonOpaque().strength(2f).luminance(state -> 4).sounds(BlockSoundGroup.WOOL)), ModItemGroup.ETTDA_GROUP);
+    public static final Block SACRIFICUS_ALTAR = registerBlock("sacrificus_altar", new Block(FabricBlockSettings.of(Material.STONE).sounds(BlockSoundGroup.WOOD).luminance(1).nonOpaque()), ModItemGroup.ETTDA_GROUP);
 
     private static Block registerBlock(String name, Block block, ItemGroup group) {
         registerBlockItem(name, block, group);
