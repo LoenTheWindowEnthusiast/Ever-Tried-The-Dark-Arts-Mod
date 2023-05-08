@@ -1,11 +1,7 @@
 package net.loenk.evertrieddarkarts.item.custom;
 
 
-import net.loenk.evertrieddarkarts.block.ModBlocks;
-import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.entity.*;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.ZombieEntity;
@@ -13,14 +9,10 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.stat.Stats;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.ItemScatterer;
-import net.minecraft.util.Util;
 import net.minecraft.world.World;
 
 import java.util.Random;
