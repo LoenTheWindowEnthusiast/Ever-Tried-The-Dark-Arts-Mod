@@ -70,13 +70,13 @@ public class KindledFortuneBerryItem extends Item{
                 break;
             case 3:
                 TntEntity tnt = new TntEntity(EntityType.TNT ,world);
-                tnt.setPos(user.getBlockX(), user.getBlockY(), user.getBlockZ());
+                tnt.setPos(user.getBlockX(), user.getBlockY() + 1, user.getBlockZ());
                 tnt.setFuse(60);
                 world.spawnEntity(tnt);
                 break;
             case 4:
                 TntEntity tnt2 = new TntEntity(EntityType.TNT ,world);
-                tnt2.setPos(user.getBlockX(), user.getBlockY(), user.getBlockZ());
+                tnt2.setPos(user.getBlockX(), user.getBlockY() + 1, user.getBlockZ());
                 tnt2.setFuse(5);
                 world.spawnEntity(tnt2);
                 break;
