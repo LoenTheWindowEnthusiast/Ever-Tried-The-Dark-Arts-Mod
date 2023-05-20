@@ -10,14 +10,12 @@ import java.util.Set;
 
 public class HexBagIdAndPowerManager {
 
-    public static final HexBagSpell HEALING_SPELL = new HexBagSpell(Set.of(Items.EMERALD), 1);
+    public static final int HEALING_SPELL = 1;
 
-    public static final HexBagSpell[] hexBagSpells= {HEALING_SPELL};
 
 
     public static int getHexBagSpellID(Inventory inventory) {
-        if (HexBagIdAndPowerManager.containsItems(inventory, HEALING_SPELL.RequiredItems)) return HEALING_SPELL.SpellId;
-
+        if (HexBagIdAndPowerManager.containsItems(inventory, Set.of(Items.EMERALD))) return HEALING_SPELL;
 
         return 0;
     }
@@ -42,10 +40,5 @@ public class HexBagIdAndPowerManager {
         else return false;
     }
 
-    public static HexBagSpell getHexBagSpellById(int id) {
-        for (int i = 0; i < hexBagSpells.length; i++) {
-            if (hexBagSpells[i].SpellId == id) return hexBagSpells[i];
-        }
-        return null;
-    }
+
 }
