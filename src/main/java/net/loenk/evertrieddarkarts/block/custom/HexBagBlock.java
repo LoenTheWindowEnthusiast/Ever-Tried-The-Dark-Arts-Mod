@@ -2,17 +2,17 @@ package net.loenk.evertrieddarkarts.block.custom;
 
 import net.loenk.evertrieddarkarts.block.ModBlocks;
 import net.loenk.evertrieddarkarts.block.entity.HexBagBlockEntity;
+import net.loenk.evertrieddarkarts.util.HexBagIdAndPowerManager;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.TntEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
@@ -46,11 +46,10 @@ public class HexBagBlock extends BlockWithEntity {
         if (blockEntity instanceof HexBagBlockEntity) {
             HexBagBlockEntity hexBagBlockEntity = (HexBagBlockEntity) blockEntity;
             if (itemStack.hasNbt()) {
-                hexBagBlockEntity.HexBagSpellID = itemStack.getNbt().getInt("evertrieddarkarts.hexbagspellid");
-                hexBagBlockEntity.HexBagSpellPower = itemStack.getNbt().getInt("evertrieddarkarts.hexbagspellpower");
+                hexBagBlockEntity.SpellID = itemStack.getNbt().getInt("evertrieddarkarts.hexbagspellid");
+                hexBagBlockEntity.SpellPower = itemStack.getNbt().getInt("evertrieddarkarts.hexbagspellpower");
             }
         }
-
         super.onPlaced(world, pos, state, placer, itemStack);
     }
 
@@ -62,26 +61,27 @@ public class HexBagBlock extends BlockWithEntity {
             HexBagBlockEntity hexBagBlockEntity = (HexBagBlockEntity) blockEntity;
             ItemStack drop = new ItemStack(ModBlocks.HEX_BAG.asItem(), 1);
 
-            if (hexBagBlockEntity.HexBagSpellPower == 0 && hexBagBlockEntity.HexBagSpellID == 0) {
+            if (hexBagBlockEntity.SpellID == 0) {
                 if (((Inventory)hexBagBlockEntity).isEmpty()){
-                    NbtCompound nbtData = new NbtCompound();
-                    nbtData.putInt("evertrieddarkarts.hexbagspellpower", 5);
-                    drop.setNbt(nbtData);
                     ItemScatterer.spawn(world, pos.getX(), pos.getY(), pos.getZ(), drop);
 
                     player.sendMessage(new LiteralText("1"), false); // REMOVE
                 }else {
                     NbtCompound nbtData = new NbtCompound();
-                    nbtData.putInt("evertrieddarkarts.hexbagspellpower", 5);
-                    drop.setNbt(nbtData);
+                    nbtData.putInt("evertrieddarkarts.hexbagspellid", HexBagIdAndPowerManager.getHexBagSpellID((Inventory)hexBagBlockEntity));
+                    nbtData.putInt("evertrieddarkarts.hexbagspellpower", HexBagIdAndPowerManager.getHexBagSpellPower((Inventory)hexBagBlockEntity));
+                    if (HexBagIdAndPowerManager.getHexBagSpellID((Inventory)hexBagBlockEntity) != 0){
+                        drop.setNbt(nbtData);
+                    } else {
+                        ItemScatterer.spawn(world, pos, (Inventory) hexBagBlockEntity);
+                    }
 
                     player.sendMessage(new LiteralText("2"), false); // REMOVE
-                    // Check for Items and assign spell and spell power
                 }
             } else {
                 drop.setNbt(new NbtCompound());
-                drop.getNbt().putInt("evertrieddarkarts.hexbagspellid", hexBagBlockEntity.HexBagSpellID);
-                drop.getNbt().putInt("evertrieddarkarts.hexbagspellpower", hexBagBlockEntity.HexBagSpellPower);
+                drop.getNbt().putInt("evertrieddarkarts.hexbagspellid", hexBagBlockEntity.SpellID);
+                drop.getNbt().putInt("evertrieddarkarts.hexbagspellpower", hexBagBlockEntity.SpellPower);
                 player.sendMessage(new LiteralText("3"), false); // REMOVE
             }
 
@@ -92,15 +92,22 @@ public class HexBagBlock extends BlockWithEntity {
     }
 
 
+    int getSpellPower(HexBagBlockEntity hexBagBlockEntity) {
+        return 0;
+    }
+
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+        // change it to so it only opens for owner if (!(((HexBagBlockEntity)(world.getBlockEntity(pos))).HexBagSpellID == 0)) return ActionResult.FAIL;
+
         if (world.isClient) {
             return ActionResult.SUCCESS;
         }
 
 
         BlockEntity blockEntity = world.getBlockEntity(pos);
-        player.sendMessage(new LiteralText("HexBagelSpellPower: " + ((HexBagBlockEntity)blockEntity).HexBagSpellPower), false);
+        player.sendMessage(new LiteralText("HexBagelSpellID: " + ((HexBagBlockEntity)blockEntity).SpellID), false);
+        player.sendMessage(new LiteralText("HexBagelSpellPower: " + ((HexBagBlockEntity)blockEntity).SpellPower), false);
 
         if (blockEntity instanceof  HexBagBlockEntity) {
             player.openHandledScreen((HexBagBlockEntity)blockEntity);

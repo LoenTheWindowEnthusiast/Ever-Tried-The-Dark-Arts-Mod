@@ -3,7 +3,6 @@ package net.loenk.evertrieddarkarts.block.entity;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.LootableContainerBlockEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.item.ItemStack;
@@ -18,8 +17,9 @@ import net.minecraft.util.math.BlockPos;
 
 public class HexBagBlockEntity extends LootableContainerBlockEntity {
 
-    public int HexBagSpellID = 0;
-    public int HexBagSpellPower  = 0;
+    public int SpellID = 0;
+    public int SpellPower = 0;
+    public String HexBagOwners = null;
 
     private DefaultedList<ItemStack> inventory = DefaultedList.ofSize(9, ItemStack.EMPTY);
 
@@ -38,21 +38,27 @@ public class HexBagBlockEntity extends LootableContainerBlockEntity {
     }
 
 
-    protected void writeNbt(NbtCompound nbt) {
-        super.writeNbt(nbt);
+    public void writeNbt(NbtCompound nbt) {
         if (!this.serializeLootTable(nbt)) {
             Inventories.writeNbt(nbt, this.inventory, false);
         }
+        nbt.putInt("evertrieddarkarts.hexbagspellpower", SpellPower);
+        nbt.putInt("evertrieddarkarts.hexbagspellid", SpellID);
+
+        super.writeNbt(nbt);
     }
 
     @Override
     public void readNbt(NbtCompound nbt) {
-        super.readNbt(nbt);
         this.inventory = DefaultedList.ofSize(this.size(), ItemStack.EMPTY);
         if (!this.deserializeLootTable(nbt)) {
             Inventories.readNbt(nbt, this.inventory);
         }
 
+        SpellPower = nbt.getInt("evertrieddarkarts.hexbagspellpower");
+        SpellID = nbt.getInt("evertrieddarkarts.hexbagspellid");
+
+        super.readNbt(nbt);
     }
 
     @Override
