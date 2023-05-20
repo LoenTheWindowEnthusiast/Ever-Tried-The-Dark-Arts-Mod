@@ -93,7 +93,7 @@ public class KindledFortuneBerryItem extends Item{
                 int xpAmount = rand.nextInt(250) + 51;
                 player.addExperience(xpAmount);
                 player.sendMessage(new LiteralText("You suddenly feel +" + xpAmount + " more experienced"), false);
-
+                
         }
     }
 
