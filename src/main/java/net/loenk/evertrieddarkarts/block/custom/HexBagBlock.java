@@ -2,9 +2,13 @@ package net.loenk.evertrieddarkarts.block.custom;
 
 import net.loenk.evertrieddarkarts.block.ModBlocks;
 import net.loenk.evertrieddarkarts.block.entity.HexBagBlockEntity;
+import net.loenk.evertrieddarkarts.block.entity.ModBlockEntities;
 import net.loenk.evertrieddarkarts.util.HexBagIdAndPowerManager;
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.block.entity.HopperBlockEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
@@ -46,19 +50,10 @@ public class HexBagBlock extends BlockWithEntity {
 
 
     @Override
-    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        BlockEntity blockEntity = world.getBlockEntity(pos);
-        HexBagBlockEntity hexBagBlockEntity = (HexBagBlockEntity) blockEntity;
-        if (hexBagBlockEntity.SpellID != 0) {
-            switch (hexBagBlockEntity.SpellID) {
-                case HexBagIdAndPowerManager.HEALING_SPELL:
-                    applyStatusEffectToEntitiesInRange(world, pos, 3,new StatusEffectInstance(StatusEffects.REGENERATION, 200, hexBagBlockEntity.SpellPower - 1));
-                    break;
-            }
-        }
-
-        super.scheduledTick(state, world, pos, random);
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        return checkType(type, ModBlockEntities.HexBag, (world1, pos, state1, be) -> HexBagBlockEntity.tick(world1, pos, state1, be));
     }
+
 
     @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
@@ -127,34 +122,15 @@ public class HexBagBlock extends BlockWithEntity {
 
         if (blockEntity instanceof  HexBagBlockEntity) {
             player.openHandledScreen((HexBagBlockEntity)blockEntity);
-
-            // REMOVE
-            HexBagBlockEntity hexBagBlockEntity = (HexBagBlockEntity) blockEntity;
-            if (hexBagBlockEntity.SpellID != 0) {
-                switch (hexBagBlockEntity.SpellID) {
-                    case HexBagIdAndPowerManager.HEALING_SPELL:
-                        player.sendMessage(new LiteralText("cock"), false);
-                        applyStatusEffectToEntitiesInRange(world, pos, 3,new StatusEffectInstance(StatusEffects.REGENERATION, 200, hexBagBlockEntity.SpellPower - 1));
-                        break;
-                }
-            }
         }
 
 
         return ActionResult.CONSUME;
     }
 
-    void applyStatusEffectToEntitiesInRange(World world, BlockPos pos, float maxDistance, StatusEffectInstance effect) {
-        TypeFilter filter = TypeFilter.instanceOf(LivingEntity.class);
-        Box box = new Box(pos.getX()-maxDistance,pos.getY()-maxDistance,pos.getZ()-maxDistance,pos.getX()+maxDistance,pos.getY()+maxDistance,pos.getZ()+maxDistance);
-        List<LivingEntity> entities = world.getEntitiesByType(filter, box, EntityPredicates.VALID_LIVING_ENTITY);
-
-        for (LivingEntity livingEntity: entities) {
-            livingEntity.addStatusEffect(effect);
-        }
 
 
-    }
+
     @Override
     public BlockRenderType getRenderType(BlockState state) {
         return BlockRenderType.MODEL;
