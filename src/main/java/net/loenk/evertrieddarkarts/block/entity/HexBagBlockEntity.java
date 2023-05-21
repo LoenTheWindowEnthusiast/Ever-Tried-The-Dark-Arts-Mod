@@ -3,7 +3,6 @@ package net.loenk.evertrieddarkarts.block.entity;
 
 import net.loenk.evertrieddarkarts.util.HexBagIdAndPowerManager;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.LootableContainerBlockEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -30,7 +29,7 @@ public class HexBagBlockEntity extends LootableContainerBlockEntity {
 
     public int SpellID = 0;
     public int SpellPower = 0;
-    public String HexBagOwners = null;
+    public String HexBagOwners = "#NoOwner";
 
     private DefaultedList<ItemStack> inventory = DefaultedList.ofSize(9, ItemStack.EMPTY);
 
@@ -51,15 +50,7 @@ public class HexBagBlockEntity extends LootableContainerBlockEntity {
     public float cooldown = -1;
 
 
-    public void writeNbt(NbtCompound nbt) {
-        if (!this.serializeLootTable(nbt)) {
-            Inventories.writeNbt(nbt, this.inventory, false);
-        }
-        nbt.putInt("evertrieddarkarts.hexbagspellpower", SpellPower);
-        nbt.putInt("evertrieddarkarts.hexbagspellid", SpellID);
 
-        super.writeNbt(nbt);
-    }
 
     public static void tick(World world, BlockPos pos, BlockState state, HexBagBlockEntity hexBagBlockEntity) {
         --hexBagBlockEntity.cooldown;
@@ -77,13 +68,18 @@ public class HexBagBlockEntity extends LootableContainerBlockEntity {
     }
 
     static void applyStatusEffectToEntitiesInRange(World world, BlockPos pos, float maxDistance, StatusEffectInstance effect) {
-        TypeFilter filter = TypeFilter.instanceOf(LivingEntity.class);
-        Box box = new Box(pos.getX()-maxDistance,pos.getY()-maxDistance,pos.getZ()-maxDistance,pos.getX()+maxDistance,pos.getY()+maxDistance,pos.getZ()+maxDistance);
-        List<LivingEntity> entities = world.getEntitiesByType(filter, box, EntityPredicates.VALID_LIVING_ENTITY);
+        List<LivingEntity> entities = getAffectedEntitiesForHexBag(world, pos, maxDistance);
 
         for (LivingEntity livingEntity: entities) {
             livingEntity.addStatusEffect(effect);
         }
+    }
+
+    static List<LivingEntity> getAffectedEntitiesForHexBag(World world, BlockPos pos, float maxDistance) {
+        TypeFilter filter = TypeFilter.instanceOf(LivingEntity.class);
+        Box box = new Box(pos.getX()-maxDistance,pos.getY()-maxDistance,pos.getZ()-maxDistance,pos.getX()+maxDistance,pos.getY()+maxDistance,pos.getZ()+maxDistance);
+        List<LivingEntity> entities = world.getEntitiesByType(filter, box, EntityPredicates.VALID_LIVING_ENTITY);
+        return entities;
     }
 
     public boolean needsCooldown() {
@@ -92,6 +88,17 @@ public class HexBagBlockEntity extends LootableContainerBlockEntity {
 
     public void setCooldown(int i) {
         this.cooldown = i;
+    }
+
+    public void writeNbt(NbtCompound nbt) {
+        if (!this.serializeLootTable(nbt)) {
+            Inventories.writeNbt(nbt, this.inventory, false);
+        }
+        nbt.putInt("evertrieddarkarts.hexbagspellpower", SpellPower);
+        nbt.putInt("evertrieddarkarts.hexbagspellid", SpellID);
+        nbt.putString("evertrieddarkarts.hexbagowners", HexBagOwners);
+
+        super.writeNbt(nbt);
     }
 
     @Override
@@ -103,6 +110,7 @@ public class HexBagBlockEntity extends LootableContainerBlockEntity {
 
         SpellPower = nbt.getInt("evertrieddarkarts.hexbagspellpower");
         SpellID = nbt.getInt("evertrieddarkarts.hexbagspellid");
+        HexBagOwners = nbt.getString("evertrieddarkarts.hexbagowners");
 
         super.readNbt(nbt);
     }

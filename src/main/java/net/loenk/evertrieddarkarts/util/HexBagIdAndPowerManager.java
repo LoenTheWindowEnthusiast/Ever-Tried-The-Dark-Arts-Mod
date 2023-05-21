@@ -11,11 +11,12 @@ import java.util.Set;
 public class HexBagIdAndPowerManager {
 
     public static final int HEALING_SPELL = 1;
+    public static final int POSION_SPELL = 2;
 
 
 
     public static int getHexBagSpellID(Inventory inventory) {
-        if (HexBagIdAndPowerManager.containsItems(inventory, Set.of(Items.EMERALD))) return HEALING_SPELL;
+        if (HexBagIdAndPowerManager.containsItems(inventory, Set.of(Items.GOLDEN_APPLE, Items.GLISTERING_MELON_SLICE, Items.AMETHYST_SHARD, Items.POPPY, Items.DIAMOND_CHESTPLATE))) return HEALING_SPELL;
 
         return 0;
     }
@@ -28,6 +29,16 @@ public class HexBagIdAndPowerManager {
         return highestFound;
     }
 
+    public static String getHexBagOwners(Inventory inventory) {
+        if (!(inventory.containsAny(Set.of(Items.PAPER)))) return "#NoOwner";
+        for (int i = 0; i < inventory.size(); i++) {
+            ItemStack stack = inventory.getStack(i);
+            if (stack.getItem().equals(Items.PAPER) && stack.getName().asString() != Items.PAPER.getName().asString()) {
+                return stack.getName().asString();
+            }
+        }
+        return "#NoOwner";
+    }
 
     public static boolean containsItems(Inventory inv, Set<Item> items) {
         int xNeeded = items.size();
