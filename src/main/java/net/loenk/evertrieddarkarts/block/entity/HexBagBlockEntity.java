@@ -61,7 +61,7 @@ public class HexBagBlockEntity extends LootableContainerBlockEntity {
             if (hexBagBlockEntity.SpellID != 0 && !world.isClient()) {
                 switch (hexBagBlockEntity.SpellID) {
                     case HexBagIdAndPowerManager.HEALING_SPELL:
-                        applyStatusEffectToEntitiesInRange(world, pos, 5,new StatusEffectInstance(StatusEffects.REGENERATION, 100, hexBagBlockEntity.SpellPower - 1));
+                        applyStatusEffectToEntitiesInRange(world, pos, 4,new StatusEffectInstance(StatusEffects.REGENERATION, 100, hexBagBlockEntity.SpellPower - 1));
                         break;
                     case HexBagIdAndPowerManager.POISON_SPELL:
                         applyStatusEffectToEntitiesInRange(world, pos, 4, new StatusEffectInstance(StatusEffects.POISON, 100, hexBagBlockEntity.SpellPower - 1));
