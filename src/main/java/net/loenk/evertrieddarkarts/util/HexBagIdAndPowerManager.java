@@ -1,5 +1,6 @@
 package net.loenk.evertrieddarkarts.util;
 
+import net.loenk.evertrieddarkarts.item.ModItems;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -11,12 +12,13 @@ import java.util.Set;
 public class HexBagIdAndPowerManager {
 
     public static final int HEALING_SPELL = 1;
-    public static final int POSION_SPELL = 2;
+    public static final int POISON_SPELL = 2;
 
 
 
     public static int getHexBagSpellID(Inventory inventory) {
-        if (HexBagIdAndPowerManager.containsItems(inventory, Set.of(Items.GOLDEN_APPLE, Items.GLISTERING_MELON_SLICE, Items.AMETHYST_SHARD, Items.POPPY, Items.DIAMOND_CHESTPLATE))) return HEALING_SPELL;
+        if (HexBagIdAndPowerManager.containsItems(inventory, Set.of(Items.GOLDEN_APPLE, Items.GLISTERING_MELON_SLICE, Items.AMETHYST_SHARD, Items.POPPY, Items.DIAMOND_CHESTPLATE, ModItems.NORMAL_BLOOD_VIAL))) return HEALING_SPELL;
+        if (HexBagIdAndPowerManager.containsItems(inventory, Set.of(Items.ROTTEN_FLESH, Items.EMERALD, Items.BONE, Items.SPIDER_EYE, Items.DIAMOND_CHESTPLATE, ModItems.UNDEAD_ESSENCE_VIAL))) return POISON_SPELL;
 
         return 0;
     }

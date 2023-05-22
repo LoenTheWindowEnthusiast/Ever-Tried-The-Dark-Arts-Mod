@@ -22,6 +22,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 
+import java.util.Collection;
 import java.util.List;
 
 
@@ -55,12 +56,15 @@ public class HexBagBlockEntity extends LootableContainerBlockEntity {
     public static void tick(World world, BlockPos pos, BlockState state, HexBagBlockEntity hexBagBlockEntity) {
         --hexBagBlockEntity.cooldown;
         if (hexBagBlockEntity.needsCooldown()) {
-            hexBagBlockEntity.setCooldown(16);
+            hexBagBlockEntity.setCooldown(8);
         } else {
             if (hexBagBlockEntity.SpellID != 0 && !world.isClient()) {
                 switch (hexBagBlockEntity.SpellID) {
                     case HexBagIdAndPowerManager.HEALING_SPELL:
-                        applyStatusEffectToEntitiesInRange(world, pos, 3,new StatusEffectInstance(StatusEffects.REGENERATION, 50, hexBagBlockEntity.SpellPower - 1));
+                        applyStatusEffectToEntitiesInRange(world, pos, 5,new StatusEffectInstance(StatusEffects.REGENERATION, 100, hexBagBlockEntity.SpellPower - 1));
+                        break;
+                    case HexBagIdAndPowerManager.POISON_SPELL:
+                        applyStatusEffectToEntitiesInRange(world, pos, 4, new StatusEffectInstance(StatusEffects.POISON, 100, hexBagBlockEntity.SpellPower - 1));
                         break;
                 }
             }
@@ -71,6 +75,13 @@ public class HexBagBlockEntity extends LootableContainerBlockEntity {
         List<LivingEntity> entities = getAffectedEntitiesForHexBag(world, pos, maxDistance);
 
         for (LivingEntity livingEntity: entities) {
+            Collection<StatusEffectInstance> effectInstances = livingEntity.getStatusEffects();
+            for (StatusEffectInstance effectInstance : effectInstances) {
+                if (effectInstance.getEffectType().equals(effect.getEffectType()) && effectInstance.getAmplifier() <= effect.getAmplifier() && effectInstance.getDuration() > 1) {
+                    return;
+                }
+            }
+
             livingEntity.addStatusEffect(effect);
         }
     }
