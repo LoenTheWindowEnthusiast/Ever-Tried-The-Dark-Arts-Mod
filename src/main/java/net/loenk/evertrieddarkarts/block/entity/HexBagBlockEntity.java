@@ -20,6 +20,7 @@ import net.minecraft.util.TypeFilter;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import java.util.Collection;
@@ -61,10 +62,10 @@ public class HexBagBlockEntity extends LootableContainerBlockEntity {
             if (hexBagBlockEntity.SpellID != 0 && !world.isClient()) {
                 switch (hexBagBlockEntity.SpellID) {
                     case HexBagIdAndPowerManager.HEALING_SPELL:
-                        applyStatusEffectToEntitiesInRange(world, pos, 4,new StatusEffectInstance(StatusEffects.REGENERATION, 100, hexBagBlockEntity.SpellPower - 1));
+                        applyStatusEffectToEntitiesInRange(world, pos, 3,new StatusEffectInstance(StatusEffects.REGENERATION, 100, hexBagBlockEntity.SpellPower - 1));
                         break;
                     case HexBagIdAndPowerManager.POISON_SPELL:
-                        applyStatusEffectToEntitiesInRange(world, pos, 4, new StatusEffectInstance(StatusEffects.POISON, 100, hexBagBlockEntity.SpellPower - 1));
+                        applyStatusEffectToEntitiesInRange(world, pos, 3, new StatusEffectInstance(StatusEffects.POISON, 100, hexBagBlockEntity.SpellPower - 1));
                         break;
                 }
             }
@@ -88,7 +89,9 @@ public class HexBagBlockEntity extends LootableContainerBlockEntity {
 
     static List<LivingEntity> getAffectedEntitiesForHexBag(World world, BlockPos pos, float maxDistance) {
         TypeFilter filter = TypeFilter.instanceOf(LivingEntity.class);
-        Box box = new Box(pos.getX()-maxDistance,pos.getY()-maxDistance,pos.getZ()-maxDistance,pos.getX()+maxDistance,pos.getY()+maxDistance,pos.getZ()+maxDistance);
+
+        Box box = new Box(pos).expand(maxDistance);
+
         List<LivingEntity> entities = world.getEntitiesByType(filter, box, EntityPredicates.VALID_LIVING_ENTITY);
         return entities;
     }
