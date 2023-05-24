@@ -17,6 +17,8 @@ public class ModItems {
     public static final Item NORMAL_BLOOD_VIAL = registerItem("normal_blood_vial", new Item(new FabricItemSettings().group(ModItemGroup.ETTDA_GROUP)));
     public static final Item UNDEAD_ESSENCE_VIAL = registerItem("undead_essence_vial", new Item(new FabricItemSettings().group(ModItemGroup.ETTDA_GROUP)));
 
+
+    public static final Item INFUSED_DIAMOND = registerItem("infused_diamond", new Item(new FabricItemSettings().group(ModItemGroup.ETTDA_GROUP)));
     public static final Item RITUS_KNIFE = registerItem("ritus_knife", new RitusKnifeItem(HexToolMaterial.INSTANCE, 3, -2.4f, new FabricItemSettings().group(ModItemGroup.ETTDA_GROUP).rarity(Rarity.UNCOMMON)));
 
     public static final Item FORTUNE_BERRY = registerItem("fortune_berry", new Item(new FabricItemSettings().group(ModItemGroup.ETTDA_GROUP).food(ModFoodComponents.FORTUNE_BERRY)));
