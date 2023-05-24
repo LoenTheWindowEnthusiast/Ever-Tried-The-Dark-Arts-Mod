@@ -1,6 +1,6 @@
 {
 	"parent": "block/cube_all",
 	"textures": {
-		"all": "evertrieddarkarts/sacrificus_altar"
+		"all": "evertrieddarkarts:block/sacrificus_altar"
 	}
 }
