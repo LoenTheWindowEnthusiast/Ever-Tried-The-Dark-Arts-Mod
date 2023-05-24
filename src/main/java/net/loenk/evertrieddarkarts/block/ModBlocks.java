@@ -1,13 +1,10 @@
 package net.loenk.evertrieddarkarts.block;
 
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.fabricmc.fabric.api.loot.v1.FabricLootPoolBuilder;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.loenk.evertrieddarkarts.EverTriedDarkArtsMod;
 import net.loenk.evertrieddarkarts.block.custom.HexBagBlock;
-import net.loenk.evertrieddarkarts.block.custom.SacrificusAltarBlock;
 import net.loenk.evertrieddarkarts.item.ModItemGroup;
-import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.Material;
 import net.minecraft.item.BlockItem;
@@ -22,7 +19,7 @@ public class ModBlocks {
 
 
     public static final Block HEX_BAG = registerBlock("hex_bag", new HexBagBlock(FabricBlockSettings.of(Material.WOOL).nonOpaque().strength(2f).luminance(state -> 4).sounds(BlockSoundGroup.WOOL)), ModItemGroup.ETTDA_GROUP);
-    public static final Block SACRIFICUS_ALTAR = registerBlock("sacrificus_altar", new SacrificusAltarBlock(FabricBlockSettings.of(Material.STONE).sounds(BlockSoundGroup.ANCIENT_DEBRIS).luminance(1).nonOpaque().strength(5.0f, 30.0f)), ModItemGroup.ETTDA_GROUP);
+    public static final Block SACRIFICUS_ALTAR = registerBlock("sacrificus_altar", new Block(FabricBlockSettings.of(Material.STONE).sounds(BlockSoundGroup.ANCIENT_DEBRIS).luminance(1).nonOpaque().strength(5.0f, 30.0f)), ModItemGroup.ETTDA_GROUP);
 
     private static Block registerBlock(String name, Block block, ItemGroup group) {
         registerBlockItem(name, block, group);
