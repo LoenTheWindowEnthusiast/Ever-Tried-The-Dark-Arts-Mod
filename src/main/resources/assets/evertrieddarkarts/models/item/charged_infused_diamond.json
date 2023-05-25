@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "evertrieddarkarts:item/infused_diamond"
+    "layer0": "evertrieddarkarts:item/charged_infused_diamond"
   }
 }
