@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " # ",
+    "CDZ",
+    " L "
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:water_bucket"
+    },
+    "C": {
+      "item": "evertrieddarkarts:normal_blood_vial"
+    },
+    "D": {
+      "item": "minecraft:diamond"
+    },
+    "Z": {
+      "item": "evertrieddarkarts:undead_essence_vial"
+    },
+    "L": {
+      "item": "minecraft:lava_bucket"
+    }
+  },
+  "result": {
+    "item": "evertrieddarkarts:infused_diamond",
+    "count": 1
+  }
+}
