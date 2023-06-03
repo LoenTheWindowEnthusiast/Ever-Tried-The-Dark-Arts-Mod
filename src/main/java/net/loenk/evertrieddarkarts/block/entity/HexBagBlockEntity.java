@@ -31,6 +31,7 @@ public class HexBagBlockEntity extends LootableContainerBlockEntity {
 
     public int SpellID = 0;
     public int SpellPower = 0;
+    public float SpellRangeModifier = 1;
     public String HexBagOwners = "#NoOwner";
 
     private DefaultedList<ItemStack> inventory = DefaultedList.ofSize(9, ItemStack.EMPTY);
@@ -62,10 +63,10 @@ public class HexBagBlockEntity extends LootableContainerBlockEntity {
             if (hexBagBlockEntity.SpellID != 0 && !world.isClient()) {
                 switch (hexBagBlockEntity.SpellID) {
                     case HexBagIdAndPowerManager.HEALING_SPELL:
-                        applyStatusEffectToEntitiesInRange(world, pos, 3,new StatusEffectInstance(StatusEffects.REGENERATION, 100, hexBagBlockEntity.SpellPower - 1));
+                        applyStatusEffectToEntitiesInRange(world, pos, 3 * hexBagBlockEntity.SpellRangeModifier,new StatusEffectInstance(StatusEffects.REGENERATION, 100, hexBagBlockEntity.SpellPower - 1));
                         break;
                     case HexBagIdAndPowerManager.POISON_SPELL:
-                        applyStatusEffectToEntitiesInRange(world, pos, 3, new StatusEffectInstance(StatusEffects.POISON, 100, hexBagBlockEntity.SpellPower - 1));
+                        applyStatusEffectToEntitiesInRange(world, pos, 3 * hexBagBlockEntity.SpellRangeModifier, new StatusEffectInstance(StatusEffects.POISON, 100, hexBagBlockEntity.SpellPower - 1));
                         break;
                 }
             }
@@ -110,6 +111,7 @@ public class HexBagBlockEntity extends LootableContainerBlockEntity {
         }
         nbt.putInt("evertrieddarkarts.hexbagspellpower", SpellPower);
         nbt.putInt("evertrieddarkarts.hexbagspellid", SpellID);
+        nbt.putFloat("evertrieddarkarts.hexbagspellrangemodifier", SpellRangeModifier);
         nbt.putString("evertrieddarkarts.hexbagowners", HexBagOwners);
 
         super.writeNbt(nbt);
@@ -124,6 +126,7 @@ public class HexBagBlockEntity extends LootableContainerBlockEntity {
 
         SpellPower = nbt.getInt("evertrieddarkarts.hexbagspellpower");
         SpellID = nbt.getInt("evertrieddarkarts.hexbagspellid");
+        SpellRangeModifier = nbt.getFloat("evertrieddarkarts.hexbagspellrangemodifier");
         HexBagOwners = nbt.getString("evertrieddarkarts.hexbagowners");
 
         super.readNbt(nbt);

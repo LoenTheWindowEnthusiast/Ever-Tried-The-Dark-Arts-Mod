@@ -32,6 +32,13 @@ public class HexBagIdAndPowerManager {
         return highestFound;
     }
 
+    public static float getHexBagRangeModifier(Inventory inventory) {
+        float highestFound = 1;
+        if (HexBagIdAndPowerManager.containsItems(inventory, Set.of(Items.APPLE))) highestFound = 1.4f;
+
+        return highestFound;
+    }
+
     public static String getHexBagOwners(Inventory inventory) {
         if (!(inventory.containsAny(Set.of(Items.PAPER)))) return "#NoOwner";
         for (int i = 0; i < inventory.size(); i++) {

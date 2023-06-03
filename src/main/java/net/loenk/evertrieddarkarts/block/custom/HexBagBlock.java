@@ -63,6 +63,7 @@ public class HexBagBlock extends BlockWithEntity {
             if (itemStack.hasNbt()) {
                 hexBagBlockEntity.SpellID = itemStack.getNbt().getInt("evertrieddarkarts.hexbagspellid");
                 hexBagBlockEntity.SpellPower = itemStack.getNbt().getInt("evertrieddarkarts.hexbagspellpower");
+                hexBagBlockEntity.SpellRangeModifier = itemStack.getNbt().getFloat("evertrieddarkarts.hexbagspellrangemodifier");
                 hexBagBlockEntity.HexBagOwners = itemStack.getNbt().getString("evertrieddarkarts.hexbagowners");
             }
         }
@@ -86,6 +87,7 @@ public class HexBagBlock extends BlockWithEntity {
                     NbtCompound nbtData = new NbtCompound();
                     nbtData.putInt("evertrieddarkarts.hexbagspellid", HexBagIdAndPowerManager.getHexBagSpellID((Inventory)hexBagBlockEntity));
                     nbtData.putInt("evertrieddarkarts.hexbagspellpower", HexBagIdAndPowerManager.getHexBagSpellPower((Inventory)hexBagBlockEntity));
+                    nbtData.putFloat("evertrieddarkarts.hexbagspellrangemodifier", HexBagIdAndPowerManager.getHexBagRangeModifier((Inventory)hexBagBlockEntity));
                     nbtData.putString("evertrieddarkarts.hexbagowners", HexBagIdAndPowerManager.getHexBagOwners((Inventory)hexBagBlockEntity));
                     if (HexBagIdAndPowerManager.getHexBagSpellID((Inventory)hexBagBlockEntity) != 0){
                         drop.setNbt(nbtData);
@@ -99,6 +101,7 @@ public class HexBagBlock extends BlockWithEntity {
                 drop.setNbt(new NbtCompound());
                 drop.getNbt().putInt("evertrieddarkarts.hexbagspellid", hexBagBlockEntity.SpellID);
                 drop.getNbt().putInt("evertrieddarkarts.hexbagspellpower", hexBagBlockEntity.SpellPower);
+                drop.getNbt().putFloat("evertrieddarkarts.hexbagspellrangemodifier", hexBagBlockEntity.SpellRangeModifier);
                 drop.getNbt().putString("evertrieddarkarts.hexbagowners", hexBagBlockEntity.HexBagOwners);
                 player.sendMessage(new LiteralText("3"), false); // REMOVE
             }
@@ -122,6 +125,7 @@ public class HexBagBlock extends BlockWithEntity {
         BlockEntity blockEntity = world.getBlockEntity(pos);
         player.sendMessage(new LiteralText("HexBagSpellID: " + ((HexBagBlockEntity)blockEntity).SpellID), false);
         player.sendMessage(new LiteralText("HexBagSpellPower: " + ((HexBagBlockEntity)blockEntity).SpellPower), false);
+        player.sendMessage(new LiteralText("HexBagRangeModifier: " + ((HexBagBlockEntity)blockEntity).SpellRangeModifier), false);
         player.sendMessage(new LiteralText("HexBagOwners: " + ((HexBagBlockEntity)blockEntity).HexBagOwners), false);
 
         if (blockEntity instanceof  HexBagBlockEntity) {
