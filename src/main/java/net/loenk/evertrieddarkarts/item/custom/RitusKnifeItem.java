@@ -1,18 +1,19 @@
 package net.loenk.evertrieddarkarts.item.custom;
 
 
+import net.loenk.evertrieddarkarts.block.ModBlocks;
 import net.loenk.evertrieddarkarts.item.ModItems;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.SwordItem;
-import net.minecraft.item.ToolMaterial;
+import net.minecraft.item.*;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.LiteralText;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.TypedActionResult;
@@ -63,6 +64,24 @@ public class RitusKnifeItem extends SwordItem {
         }
 
         return super.use(world, user, hand);
+    }
+
+    @Override
+    public ActionResult useOnBlock(ItemUsageContext context) {
+        if (context.getWorld().isClient) return super.useOnBlock(context);
+
+        BlockState blockState = context.getWorld().getBlockState(context.getBlockPos());
+        PlayerEntity player = context.getPlayer();
+        if (blockState.isOf(Blocks.STONE) && player.getOffHandStack().getItem().equals(ModItems.NORMAL_BLOOD_VIAL) && player.isInSneakingPose()) {
+            for (PlayerEntity plyer : context.getWorld().getPlayers()) {
+                plyer.sendMessage(new LiteralText("<" + player.getName().asString() + "> " + "Daemones inferi da mihi benedictionem tuam"), false);
+            }
+            player.damage(DamageSource.MAGIC, 4);
+            context.getWorld().playSound(null, context.getBlockPos(), SoundEvents.ENTITY_PLAYER_LEVELUP, SoundCategory.NEUTRAL, 1f, 0.9f);
+            player.getOffHandStack().decrement(1);
+            context.getWorld().setBlockState(context.getBlockPos(), ModBlocks.SACRIFICUS_ALTAR.getDefaultState());
+        }
+        return super.useOnBlock(context);
     }
 
     @Override
