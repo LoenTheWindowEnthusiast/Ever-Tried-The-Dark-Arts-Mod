@@ -5,6 +5,7 @@ import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import org.apache.commons.codec.binary.Hex;
 
 
 import java.util.Set;
@@ -25,8 +26,8 @@ public class HexBagIdAndPowerManager {
 
     public static int getHexBagSpellPower(Inventory inventory) {
         int highestFound = 1;
-        if (HexBagIdAndPowerManager.containsItems(inventory, Set.of(Items.APPLE))) highestFound = 2;
-
+        if (HexBagIdAndPowerManager.containsItems(inventory, Set.of(ModItems.INFUSED_DIAMOND))) highestFound = 2;
+        if (HexBagIdAndPowerManager.containsItems(inventory, Set.of(ModItems.CHARGED_INFUSED_DIAMOND))) highestFound = 3;
 
         return highestFound;
     }
