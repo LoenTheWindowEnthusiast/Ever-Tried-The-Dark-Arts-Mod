@@ -24,6 +24,7 @@ public class ModItems {
     public static final Item CHARGED_INFUSED_DIAMOND = registerItem("charged_infused_diamond", new ChargedInfusedDiamondItem(new FabricItemSettings().group(ModItemGroup.ETTDA_GROUP).rarity(Rarity.UNCOMMON)));
     public static final Item RITUS_KNIFE = registerItem("ritus_knife", new RitusKnifeItem(HexToolMaterial.INSTANCE, 3, -2.4f, new FabricItemSettings().group(ModItemGroup.ETTDA_GROUP).rarity(Rarity.UNCOMMON)));
 
+    public static final Item CHALICE = registerItem("chalice", new Item(new FabricItemSettings().group(ModItemGroup.ETTDA_GROUP).rarity(Rarity.RARE)));
     public static final Item FORTUNE_BERRY = registerItem("fortune_berry", new Item(new FabricItemSettings().group(ModItemGroup.ETTDA_GROUP).food(ModFoodComponents.FORTUNE_BERRY)));
     public static final Item KINDLED_FORTUNE_BERRY = registerItem("kindled_fortune_berry", new KindledFortuneBerryItem(new FabricItemSettings().group(ModItemGroup.ETTDA_GROUP).food(ModFoodComponents.KINDLED_FORTUNE_BERRY).rarity(Rarity.UNCOMMON)));
 

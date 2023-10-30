@@ -16,7 +16,6 @@ public class HexBagIdAndPowerManager {
     public static final int POISON_SPELL = 2;
 
 
-
     public static int getHexBagSpellID(Inventory inventory) {
         if (HexBagIdAndPowerManager.containsItems(inventory, Set.of(Items.GOLDEN_APPLE, Items.GLISTERING_MELON_SLICE, Items.AMETHYST_SHARD, Items.POPPY, Items.DIAMOND_CHESTPLATE, ModItems.NORMAL_BLOOD_VIAL))) return HEALING_SPELL;
         if (HexBagIdAndPowerManager.containsItems(inventory, Set.of(Items.ROTTEN_FLESH, Items.EMERALD, Items.BONE, Items.SPIDER_EYE, Items.DIAMOND_CHESTPLATE, ModItems.UNDEAD_ESSENCE_VIAL))) return POISON_SPELL;

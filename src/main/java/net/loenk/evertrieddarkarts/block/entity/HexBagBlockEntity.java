@@ -20,7 +20,6 @@ import net.minecraft.util.TypeFilter;
 import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import java.util.Collection;
@@ -32,7 +31,7 @@ public class HexBagBlockEntity extends LootableContainerBlockEntity {
     public int SpellID = 0;
     public int SpellPower = 0;
     public float SpellRangeModifier = 1;
-    public String HexBagOwners = "#NoOwner";
+    public String HexBagOwner = "#NoOwner";
 
     private DefaultedList<ItemStack> inventory = DefaultedList.ofSize(9, ItemStack.EMPTY);
 
@@ -112,7 +111,7 @@ public class HexBagBlockEntity extends LootableContainerBlockEntity {
         nbt.putInt("evertrieddarkarts.hexbagspellpower", SpellPower);
         nbt.putInt("evertrieddarkarts.hexbagspellid", SpellID);
         nbt.putFloat("evertrieddarkarts.hexbagspellrangemodifier", SpellRangeModifier);
-        nbt.putString("evertrieddarkarts.hexbagowners", HexBagOwners);
+        nbt.putString("evertrieddarkarts.hexbagowners", HexBagOwner);
 
         super.writeNbt(nbt);
     }
@@ -127,7 +126,7 @@ public class HexBagBlockEntity extends LootableContainerBlockEntity {
         SpellPower = nbt.getInt("evertrieddarkarts.hexbagspellpower");
         SpellID = nbt.getInt("evertrieddarkarts.hexbagspellid");
         SpellRangeModifier = nbt.getFloat("evertrieddarkarts.hexbagspellrangemodifier");
-        HexBagOwners = nbt.getString("evertrieddarkarts.hexbagowners");
+        HexBagOwner = nbt.getString("evertrieddarkarts.hexbagowners");
 
         super.readNbt(nbt);
     }

@@ -8,35 +8,27 @@ import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityTicker;
 import net.minecraft.block.entity.BlockEntityType;
-import net.minecraft.block.entity.HopperBlockEntity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 
-import net.minecraft.predicate.entity.EntityPredicates;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
 
-import net.minecraft.util.TypeFilter;
 import net.minecraft.util.function.BooleanBiFunction;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
 import java.util.Random;
 
 
@@ -64,7 +56,7 @@ public class HexBagBlock extends BlockWithEntity {
                 hexBagBlockEntity.SpellID = itemStack.getNbt().getInt("evertrieddarkarts.hexbagspellid");
                 hexBagBlockEntity.SpellPower = itemStack.getNbt().getInt("evertrieddarkarts.hexbagspellpower");
                 hexBagBlockEntity.SpellRangeModifier = itemStack.getNbt().getFloat("evertrieddarkarts.hexbagspellrangemodifier");
-                hexBagBlockEntity.HexBagOwners = itemStack.getNbt().getString("evertrieddarkarts.hexbagowners");
+                hexBagBlockEntity.HexBagOwner = itemStack.getNbt().getString("evertrieddarkarts.hexbagowners");
             }
         }
         super.onPlaced(world, pos, state, placer, itemStack);
@@ -102,7 +94,12 @@ public class HexBagBlock extends BlockWithEntity {
                 drop.getNbt().putInt("evertrieddarkarts.hexbagspellid", hexBagBlockEntity.SpellID);
                 drop.getNbt().putInt("evertrieddarkarts.hexbagspellpower", hexBagBlockEntity.SpellPower);
                 drop.getNbt().putFloat("evertrieddarkarts.hexbagspellrangemodifier", hexBagBlockEntity.SpellRangeModifier);
-                drop.getNbt().putString("evertrieddarkarts.hexbagowners", hexBagBlockEntity.HexBagOwners);
+                drop.getNbt().putString("evertrieddarkarts.hexbagowners", hexBagBlockEntity.HexBagOwner);
+
+                if (!hexBagBlockEntity.isEmpty()) {
+                    ItemScatterer.spawn(world, pos, (Inventory) hexBagBlockEntity);
+                }
+
                 player.sendMessage(new LiteralText("3"), false); // REMOVE
             }
 
@@ -126,7 +123,7 @@ public class HexBagBlock extends BlockWithEntity {
         player.sendMessage(new LiteralText("HexBagSpellID: " + ((HexBagBlockEntity)blockEntity).SpellID), false);
         player.sendMessage(new LiteralText("HexBagSpellPower: " + ((HexBagBlockEntity)blockEntity).SpellPower), false);
         player.sendMessage(new LiteralText("HexBagRangeModifier: " + ((HexBagBlockEntity)blockEntity).SpellRangeModifier), false);
-        player.sendMessage(new LiteralText("HexBagOwners: " + ((HexBagBlockEntity)blockEntity).HexBagOwners), false);
+        player.sendMessage(new LiteralText("HexBagOwners: " + ((HexBagBlockEntity)blockEntity).HexBagOwner), false);
 
         if (blockEntity instanceof  HexBagBlockEntity) {
             player.openHandledScreen((HexBagBlockEntity)blockEntity);
