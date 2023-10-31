@@ -14,19 +14,21 @@ public class HexBagIdAndPowerManager {
 
     public static final int HEALING_SPELL = 1;
     public static final int POISON_SPELL = 2;
+    public static final int SPEED_SPELL = 3;
 
 
     public static int getHexBagSpellID(Inventory inventory) {
         if (HexBagIdAndPowerManager.containsItems(inventory, Set.of(Items.GOLDEN_APPLE, Items.GLISTERING_MELON_SLICE, Items.AMETHYST_SHARD, Items.POPPY, Items.DIAMOND_CHESTPLATE, ModItems.NORMAL_BLOOD_VIAL))) return HEALING_SPELL;
         if (HexBagIdAndPowerManager.containsItems(inventory, Set.of(Items.ROTTEN_FLESH, Items.EMERALD, Items.BONE, Items.SPIDER_EYE, Items.DIAMOND_CHESTPLATE, ModItems.UNDEAD_ESSENCE_VIAL))) return POISON_SPELL;
+        if (HexBagIdAndPowerManager.containsItems(inventory, Set.of(Items.SUGAR, Items.FEATHER, ModItems.RIB_BONE, Items.DIAMOND_BOOTS, Items.IRON_BOOTS, ModItems.NORMAL_BLOOD_VIAL))) return SPEED_SPELL;
 
         return 0;
     }
 
     public static int getHexBagSpellPower(Inventory inventory) {
-        int highestFound = 1;
-        if (HexBagIdAndPowerManager.containsItems(inventory, Set.of(ModItems.INFUSED_DIAMOND))) highestFound = 2;
-        if (HexBagIdAndPowerManager.containsItems(inventory, Set.of(ModItems.CHARGED_INFUSED_DIAMOND))) highestFound = 3;
+        int highestFound = 0;
+        if (HexBagIdAndPowerManager.containsItems(inventory, Set.of(ModItems.INFUSED_DIAMOND))) highestFound = 1;
+        if (HexBagIdAndPowerManager.containsItems(inventory, Set.of(ModItems.CHARGED_INFUSED_DIAMOND))) highestFound = 2;
 
         return highestFound;
     }

@@ -62,10 +62,13 @@ public class HexBagBlockEntity extends LootableContainerBlockEntity {
             if (hexBagBlockEntity.SpellID != 0 && !world.isClient()) {
                 switch (hexBagBlockEntity.SpellID) {
                     case HexBagIdAndPowerManager.HEALING_SPELL:
-                        applyStatusEffectToEntitiesInRange(world, pos, 3 * hexBagBlockEntity.SpellRangeModifier,new StatusEffectInstance(StatusEffects.REGENERATION, 100, hexBagBlockEntity.SpellPower - 1));
+                        applyStatusEffectToEntitiesInRange(world, pos, 3 * hexBagBlockEntity.SpellRangeModifier,new StatusEffectInstance(StatusEffects.REGENERATION, 100, hexBagBlockEntity.SpellPower));
                         break;
                     case HexBagIdAndPowerManager.POISON_SPELL:
-                        applyStatusEffectToEntitiesInRange(world, pos, 3 * hexBagBlockEntity.SpellRangeModifier, new StatusEffectInstance(StatusEffects.POISON, 100, hexBagBlockEntity.SpellPower - 1));
+                        applyStatusEffectToEntitiesInRange(world, pos, 3 * hexBagBlockEntity.SpellRangeModifier, new StatusEffectInstance(StatusEffects.POISON, 100, hexBagBlockEntity.SpellPower));
+                        break;
+                    case HexBagIdAndPowerManager.SPEED_SPELL:
+                        applyStatusEffectToEntitiesInRange(world, pos, 3 * hexBagBlockEntity.SpellRangeModifier, new StatusEffectInstance(StatusEffects.SPEED, 100, hexBagBlockEntity.SpellPower));
                         break;
                 }
             }
